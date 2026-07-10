@@ -1,0 +1,465 @@
+{
+    "loan": [
+        {
+            "id": 1,
+            "borrower_name": "Jean",
+            "amount": 50000,
+            "interest_rate": 10,
+            "weeks_loan_term": 50,
+            "start_date": "2026-06-01",
+            "end_date": "2027-05-17"
+        }
+    ],
+    "loan_schedule": [
+        {
+            "id": 1,
+            "loan_id": 1,
+            "week_number": 1,
+            "amount": 1100,
+            "due_date": "2026-06-08T23:59:59Z",
+            "paid_date": "2026-06-08T10:59:59Z",
+            "is_paid": true
+        },
+        {
+            "id": 2,
+            "loan_id": 1,
+            "week_number": 2,
+            "amount": 1100,
+            "due_date": "2026-06-15T23:59:59Z",
+            "paid_date": "2026-06-15T23:59:59Z",
+            "is_paid": true
+        },
+        {
+            "id": 3,
+            "loan_id": 1,
+            "week_number": 3,
+            "amount": 1100,
+            "due_date": "2026-06-22T23:59:59Z",
+            "paid_date": "2026-06-22T23:59:59Z",
+            "is_paid": true
+        },
+        {
+            "id": 4,
+            "loan_id": 1,
+            "week_number": 4,
+            "amount": 1100,
+            "due_date": "2026-06-29T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 5,
+            "loan_id": 1,
+            "week_number": 5,
+            "amount": 1100,
+            "due_date": "2026-07-06T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 6,
+            "loan_id": 1,
+            "week_number": 6,
+            "amount": 1100,
+            "due_date": "2026-07-13T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 7,
+            "loan_id": 1,
+            "week_number": 7,
+            "amount": 1100,
+            "due_date": "2026-07-20T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 8,
+            "loan_id": 1,
+            "week_number": 8,
+            "amount": 1100,
+            "due_date": "2026-07-27T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 9,
+            "loan_id": 1,
+            "week_number": 9,
+            "amount": 1100,
+            "due_date": "2026-08-03T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 10,
+            "loan_id": 1,
+            "week_number": 10,
+            "amount": 1100,
+            "due_date": "2026-08-10T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 11,
+            "loan_id": 1,
+            "week_number": 11,
+            "amount": 1100,
+            "due_date": "2026-08-17T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 12,
+            "loan_id": 1,
+            "week_number": 12,
+            "amount": 1100,
+            "due_date": "2026-08-24T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 13,
+            "loan_id": 1,
+            "week_number": 13,
+            "amount": 1100,
+            "due_date": "2026-08-31T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 14,
+            "loan_id": 1,
+            "week_number": 14,
+            "amount": 1100,
+            "due_date": "2026-09-07T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 15,
+            "loan_id": 1,
+            "week_number": 15,
+            "amount": 1100,
+            "due_date": "2026-09-14T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 16,
+            "loan_id": 1,
+            "week_number": 16,
+            "amount": 1100,
+            "due_date": "2026-09-21T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 17,
+            "loan_id": 1,
+            "week_number": 17,
+            "amount": 1100,
+            "due_date": "2026-09-28T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 18,
+            "loan_id": 1,
+            "week_number": 18,
+            "amount": 1100,
+            "due_date": "2026-10-05T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 19,
+            "loan_id": 1,
+            "week_number": 19,
+            "amount": 1100,
+            "due_date": "2026-10-12T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 20,
+            "loan_id": 1,
+            "week_number": 20,
+            "amount": 1100,
+            "due_date": "2026-10-19T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 21,
+            "loan_id": 1,
+            "week_number": 21,
+            "amount": 1100,
+            "due_date": "2026-10-26T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 22,
+            "loan_id": 1,
+            "week_number": 22,
+            "amount": 1100,
+            "due_date": "2026-11-02T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 23,
+            "loan_id": 1,
+            "week_number": 23,
+            "amount": 1100,
+            "due_date": "2026-11-09T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 24,
+            "loan_id": 1,
+            "week_number": 24,
+            "amount": 1100,
+            "due_date": "2026-11-16T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 25,
+            "loan_id": 1,
+            "week_number": 25,
+            "amount": 1100,
+            "due_date": "2026-11-23T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 26,
+            "loan_id": 1,
+            "week_number": 26,
+            "amount": 1100,
+            "due_date": "2026-11-30T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 27,
+            "loan_id": 1,
+            "week_number": 27,
+            "amount": 1100,
+            "due_date": "2026-12-07T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 28,
+            "loan_id": 1,
+            "week_number": 28,
+            "amount": 1100,
+            "due_date": "2026-12-14T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 29,
+            "loan_id": 1,
+            "week_number": 29,
+            "amount": 1100,
+            "due_date": "2026-12-21T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 30,
+            "loan_id": 1,
+            "week_number": 30,
+            "amount": 1100,
+            "due_date": "2026-12-28T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 31,
+            "loan_id": 1,
+            "week_number": 31,
+            "amount": 1100,
+            "due_date": "2027-01-04T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 32,
+            "loan_id": 1,
+            "week_number": 32,
+            "amount": 1100,
+            "due_date": "2027-01-11T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 33,
+            "loan_id": 1,
+            "week_number": 33,
+            "amount": 1100,
+            "due_date": "2027-01-18T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 34,
+            "loan_id": 1,
+            "week_number": 34,
+            "amount": 1100,
+            "due_date": "2027-01-25T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 35,
+            "loan_id": 1,
+            "week_number": 35,
+            "amount": 1100,
+            "due_date": "2027-02-01T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 36,
+            "loan_id": 1,
+            "week_number": 36,
+            "amount": 1100,
+            "due_date": "2027-02-08T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 37,
+            "loan_id": 1,
+            "week_number": 37,
+            "amount": 1100,
+            "due_date": "2027-02-15T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 38,
+            "loan_id": 1,
+            "week_number": 38,
+            "amount": 1100,
+            "due_date": "2027-02-22T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 39,
+            "loan_id": 1,
+            "week_number": 39,
+            "amount": 1100,
+            "due_date": "2027-03-01T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 40,
+            "loan_id": 1,
+            "week_number": 40,
+            "amount": 1100,
+            "due_date": "2027-03-08T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 41,
+            "loan_id": 1,
+            "week_number": 41,
+            "amount": 1100,
+            "due_date": "2027-03-15T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 42,
+            "loan_id": 1,
+            "week_number": 42,
+            "amount": 1100,
+            "due_date": "2027-03-22T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 43,
+            "loan_id": 1,
+            "week_number": 43,
+            "amount": 1100,
+            "due_date": "2027-03-29T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 44,
+            "loan_id": 1,
+            "week_number": 44,
+            "amount": 1100,
+            "due_date": "2027-04-05T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 45,
+            "loan_id": 1,
+            "week_number": 45,
+            "amount": 1100,
+            "due_date": "2027-04-12T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 46,
+            "loan_id": 1,
+            "week_number": 46,
+            "amount": 1100,
+            "due_date": "2027-04-19T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 47,
+            "loan_id": 1,
+            "week_number": 47,
+            "amount": 1100,
+            "due_date": "2027-04-26T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 48,
+            "loan_id": 1,
+            "week_number": 48,
+            "amount": 1100,
+            "due_date": "2027-05-03T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 49,
+            "loan_id": 1,
+            "week_number": 49,
+            "amount": 1100,
+            "due_date": "2027-05-10T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        },
+        {
+            "id": 50,
+            "loan_id": 1,
+            "week_number": 50,
+            "amount": 1100,
+            "due_date": "2027-05-17T23:59:59Z",
+            "paid_date": null,
+            "is_paid": false
+        }
+    ]
+}

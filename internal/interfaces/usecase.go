@@ -1,15 +1,14 @@
 package interfaces
 
-import (
-	"context"
-
-	"github.com/melisa92/billing/internal/model"
-)
+import "context"
 
 type LoanUsecaseInterface interface {
-	GetOutstanding(ctx context.Context) ([]*model.Loan, error)
-	GetOutstandingByLoanID(ctx context.Context, loanID int) (*model.Loan, error)
+	//	GetOutstanding : This returns the current outstanding on a loan, 0 if no outstanding(or closed),
+	GetOutstanding(ctx context.Context, loanID int) (float64, error)
 
-	IsDeliquent(ctx context.Context) error
-	MakePayment(ctx context.Context) error
+	// IsDelinquent : If there are more than 2 weeks of Non payment of the loan amount
+	IsDelinquent(ctx context.Context, loanID int) (bool, error)
+
+	// MakePayment: Make a payment of certain amount on the loan
+	MakePayment(ctx context.Context, loanID int, amount float64) (isPaymentSuccess bool, err error)
 }
