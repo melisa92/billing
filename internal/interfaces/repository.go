@@ -7,9 +7,12 @@ import (
 )
 
 type LoanRepositoryInterface interface {
-	GetLoanByID(ctx context.Context, loanID int) ([]*model.Loan, error)
+	GetLoanList(ctx context.Context) ([]*model.Loan, error)
+	GetLoanByID(ctx context.Context, loanID int) (*model.Loan, error)
 }
 
 type LoanScheduleRepositoryInterface interface {
 	GetLoanScheduleByLoanID(ctx context.Context, loanID int) ([]*model.LoanSchedule, error)
+	GetTotalPaidLoanByLoanID(ctx context.Context, loanID int) (float64, error)
+	GetOutstandingScheduleByLoanID(ctx context.Context, loanID int) ([]*model.LoanSchedule, error)
 }

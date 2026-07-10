@@ -3,23 +3,21 @@ package model
 import "time"
 
 type Loan struct {
-	ID                  int        `json:"id"`
-	BorrowerID          int        `json:"borrower_id"`
-	LoanAmount          float64    `json:"loan_amount"`
-	InterestRatePercent float64    `json:"interest_rate_percent"`
-	DurationWeeks       int        `json:"duration_weeks"`
-	StartDate           time.Time  `json:"start_date"`
-	EndDate             time.Time  `json:"end_date"`
-	Created_at          time.Time  `json:"created_at"`
-	Updated_at          *time.Time `json:"updated_at"`
+	ID            int     `json:"id"`
+	BorrowerName  string  `json:"borrower_name"`
+	Amount        float64 `json:"amount"`
+	InterestRate  float64 `json:"interest_rate"`
+	WeeksLoanTerm int     `json:"weeks_loan_term"`
+	StartDate     string  `json:"start_date"`
+	EndDate       string  `json:"end_date"`
 }
 
 type LoanSchedule struct {
-	ID         int       `json:"id"`
-	LoanID     int       `json:"loan_id"`
-	WeekNumber int       `json:"week_number"`
-	DueAmount  float64   `json:"due_amount"`
-	DuePayDate time.Time `json:"due_pay_date"`
-	PaidTime   time.Time `json:"paid_time"`
-	IsPaid     bool      `json:"is_paid"`
+	ID         int        `json:"id"`
+	LoanID     int        `json:"loan_id"`
+	WeekNumber int        `json:"week_number"`
+	Amount     float64    `json:"amount"`
+	DueTime    time.Time  `json:"due_date"`
+	PaidTime   *time.Time `json:"paid_date"`
+	IsPaid     bool       `json:"is_paid"`
 }
