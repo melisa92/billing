@@ -11,13 +11,11 @@ import (
 )
 
 type BillingUsecase struct {
-	loanRepo         iface.LoanRepositoryInterface
 	loanScheduleRepo iface.LoanScheduleRepositoryInterface
 }
 
-func NewBillingUsecase(loanRepo iface.LoanRepositoryInterface, loanScheduleRepo iface.LoanScheduleRepositoryInterface) *BillingUsecase {
+func NewBillingUsecase(loanScheduleRepo iface.LoanScheduleRepositoryInterface) *BillingUsecase {
 	return &BillingUsecase{
-		loanRepo:         loanRepo,
 		loanScheduleRepo: loanScheduleRepo,
 	}
 }
@@ -60,7 +58,10 @@ func (u *BillingUsecase) IsDelinquent(ctx context.Context, loanID int) (bool, er
 
 func (u *BillingUsecase) MakePayment(ctx context.Context, loanID int, amount float64) (isPaymentSuccess bool, err error) {
 	// Implementation for making a payment on the loan
-	loanSchedule, err := u.loanScheduleRepo.GetOutstandingScheduleByLoanID(ctx, loanID)
+	now := time.Now()
+	y, m, d := now.Date()
+	maxTimeNow := time.Date(y, m, d, 23, 59, 59, 0, time.Local)
+	loanSchedule, err := u.loanScheduleRepo.GetOutstandingScheduleByLoanIDAndDatePoint(ctx, loanID, now.Format("2006-01-02"))
 	if err != nil {
 		return false, err
 	}
@@ -68,7 +69,7 @@ func (u *BillingUsecase) MakePayment(ctx context.Context, loanID int, amount flo
 	var dueAmount float64
 	var weekNumber []int
 	for _, dueDet := range loanSchedule {
-		if dueDet.DueTime.After(time.Now().Add(24 * time.Hour)) {
+		if dueDet.DueTime.After(maxTimeNow.Add(1 * time.Second)) {
 			continue
 		}
 		weekNumber = append(weekNumber, dueDet.WeekNumber)
@@ -92,15 +93,4 @@ func (u *BillingUsecase) MakePayment(ctx context.Context, loanID int, amount flo
 	}
 
 	return true, nil
-}
-
-func isLate(dueTime time.Time, paidTime *time.Time) bool {
-	// Criteria of Late
-	// Paid, but Paid time > Due Time
-	// Not Paid, Due Time > Today
-	if (paidTime != nil && paidTime.After(dueTime)) ||
-		(dueTime.Before(time.Now()) && paidTime == nil) {
-		return true
-	}
-	return false
 }
