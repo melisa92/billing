@@ -13,6 +13,8 @@ type LoanRepositoryInterface interface {
 
 type LoanScheduleRepositoryInterface interface {
 	GetLoanScheduleByLoanID(ctx context.Context, loanID int) ([]*model.LoanSchedule, error)
+	GetLoanScheduleByLoanIDAndDatePoint(ctx context.Context, loanID int, datePoint string) ([]*model.LoanSchedule, error)
 	GetTotalPaidLoanByLoanID(ctx context.Context, loanID int) (float64, error)
 	GetOutstandingScheduleByLoanID(ctx context.Context, loanID int) ([]*model.LoanSchedule, error)
+	UpdateLoanSchedulePaidTime(ctx context.Context, loanID int, weekNumber int) error
 }
