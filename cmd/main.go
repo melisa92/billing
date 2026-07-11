@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -20,9 +21,24 @@ type dummyStruct struct {
 }
 
 func main() {
-	// generateJSON()
+	flagGenerateJSON := flag.Bool("generate-json", false, "Generate dummy JSON files")
+	flagRunTest := flag.Bool("run-test", false, "Run billing test scenarios")
 
-	initTestCase()
+	flag.Parse()
+
+	switch {
+	case *flagGenerateJSON:
+		fmt.Println("-- Start Generate JSON --")
+		generateJSON()
+		fmt.Println("-- Finish Generate JSON --")
+	case *flagRunTest:
+		fmt.Println("-- Start Running TestCase --")
+		initTestCase()
+	default:
+		fmt.Println("Please specify a command:")
+		fmt.Println("  --generate-json")
+		fmt.Println("  --run-test")
+	}
 }
 
 func initTestCase() {
@@ -40,11 +56,10 @@ func initTestCase() {
 	json.Unmarshal(sampleData, &dummyData)
 
 	// init Repo
-	loanRepo := repo.NewLoanRepository(dummyData.Loan)
 	loanScheduleRepo := repo.NewLoanScheduleRepository(dummyData.LoanSchedule)
 
 	// init usecase
-	billingUsecase := usecase.NewBillingUsecase(loanRepo, loanScheduleRepo)
+	billingUsecase := usecase.NewBillingUsecase(loanScheduleRepo)
 
 	testCases(billingUsecase)
 }
@@ -104,7 +119,7 @@ func testCases(uc iface.LoanUsecaseInterface) {
 		}
 
 		// Test Output Outstanding2
-		outstanding2, err := uc.GetOutstanding(ctx, loanID, time.Now().Format("2006-01-02"))
+		outstanding2, err := uc.GetOutstanding(ctx, loanID, "2029-10-10")
 		if err != nil {
 			fmt.Printf("TestCaseOutstanding For LoanID: %d got error: %s", loanID, err.Error())
 		} else {
