@@ -10,49 +10,46 @@ import (
 	iface "github.com/melisa92/billing/internal/interfaces"
 )
 
-type LoanUsecase struct {
+type BillingUsecase struct {
 	loanRepo         iface.LoanRepositoryInterface
 	loanScheduleRepo iface.LoanScheduleRepositoryInterface
 }
 
-func NewLoanUsecase(loanRepo iface.LoanRepositoryInterface, loanScheduleRepo iface.LoanScheduleRepositoryInterface) *LoanUsecase {
-	return &LoanUsecase{
+func NewBillingUsecase(loanRepo iface.LoanRepositoryInterface, loanScheduleRepo iface.LoanScheduleRepositoryInterface) *BillingUsecase {
+	return &BillingUsecase{
 		loanRepo:         loanRepo,
 		loanScheduleRepo: loanScheduleRepo,
 	}
 }
 
-func (u *LoanUsecase) GetOutstanding(ctx context.Context, loanID int) (float64, error) {
-	loanSchedule, err := u.loanScheduleRepo.GetLoanScheduleByLoanID(ctx, loanID)
+func (u *BillingUsecase) GetOutstanding(ctx context.Context, loanID int, datePoint string) (float64, error) {
+	loanSchedule, err := u.loanScheduleRepo.GetLoanScheduleByLoanIDAndDatePoint(ctx, loanID, datePoint)
 	if err != nil {
 		return 0, err
 	}
 
 	var outstanding float64
 	for _, dueDet := range loanSchedule {
-		if !dueDet.IsPaid {
+		if !dueDet.IsPaid() {
 			outstanding += dueDet.Amount
 		}
 	}
 	return outstanding, nil
 }
 
-func (u *LoanUsecase) IsDelinquent(ctx context.Context, loanID int) (bool, error) {
+func (u *BillingUsecase) IsDelinquent(ctx context.Context, loanID int) (bool, error) {
 	// Implementation for checking if the loan is delinquent
-	loanSchedule, err := u.loanScheduleRepo.GetLoanScheduleByLoanID(ctx, loanID)
+	loanSchedule, err := u.loanScheduleRepo.GetLoanScheduleByLoanIDAndDatePoint(ctx, loanID, time.Now().Format("2006-01-02"))
 	if err != nil {
 		return false, err
 	}
 
 	isDeliquent := false
 	var consecutiveLate int
-	for _, dueDet := range loanSchedule {
-		if isLate(dueDet.DueTime, dueDet.PaidTime) {
+	for k := len(loanSchedule) - 1; k >= 0; k-- {
+		if !loanSchedule[k].IsPaid() {
 			consecutiveLate++
-		} else {
-			consecutiveLate = 0
 		}
-
 		if consecutiveLate > 1 {
 			isDeliquent = true
 			break
@@ -61,7 +58,7 @@ func (u *LoanUsecase) IsDelinquent(ctx context.Context, loanID int) (bool, error
 	return isDeliquent, nil
 }
 
-func (u *LoanUsecase) MakePayment(ctx context.Context, loanID int, amount float64) (isPaymentSuccess bool, err error) {
+func (u *BillingUsecase) MakePayment(ctx context.Context, loanID int, amount float64) (isPaymentSuccess bool, err error) {
 	// Implementation for making a payment on the loan
 	loanSchedule, err := u.loanScheduleRepo.GetOutstandingScheduleByLoanID(ctx, loanID)
 	if err != nil {
@@ -69,10 +66,12 @@ func (u *LoanUsecase) MakePayment(ctx context.Context, loanID int, amount float6
 	}
 
 	var dueAmount float64
+	var weekNumber []int
 	for _, dueDet := range loanSchedule {
 		if dueDet.DueTime.After(time.Now().Add(24 * time.Hour)) {
 			continue
 		}
+		weekNumber = append(weekNumber, dueDet.WeekNumber)
 		dueAmount += dueDet.Amount
 	}
 
@@ -81,6 +80,15 @@ func (u *LoanUsecase) MakePayment(ctx context.Context, loanID int, amount float6
 	}
 	if dueAmount != amount {
 		return false, fmt.Errorf(errUtil.ErrPaymentAmountNotValid, fmt.Sprintf("Rp %.2f", dueAmount))
+	}
+
+	// Update payment
+	// DB should use transaction
+	for i := 0; i < len(weekNumber); i++ {
+		err = u.loanScheduleRepo.UpdateLoanSchedulePaidTime(ctx, loanID, weekNumber[i])
+		if err != nil {
+			return false, nil
+		}
 	}
 
 	return true, nil

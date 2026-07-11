@@ -19,5 +19,8 @@ type LoanSchedule struct {
 	Amount     float64    `json:"amount"`
 	DueTime    time.Time  `json:"due_date"`
 	PaidTime   *time.Time `json:"paid_date"`
-	IsPaid     bool       `json:"is_paid"`
+}
+
+func (m *LoanSchedule) IsPaid() bool {
+	return m.PaidTime != nil
 }

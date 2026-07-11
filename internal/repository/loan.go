@@ -7,10 +7,10 @@ import (
 )
 
 type LoanRepository struct {
-	SampleData []model.Loan
+	SampleData []*model.Loan
 }
 
-func NewLoanRepository(data []model.Loan) *LoanRepository {
+func NewLoanRepository(data []*model.Loan) *LoanRepository {
 	return &LoanRepository{
 		SampleData: data,
 	}
@@ -18,16 +18,16 @@ func NewLoanRepository(data []model.Loan) *LoanRepository {
 
 func (r *LoanRepository) GetLoanList(ctx context.Context) ([]*model.Loan, error) {
 	var result []*model.Loan
-	for _, v := range r.SampleData {
-		result = append(result, &v)
+	for i := range r.SampleData {
+		result = append(result, r.SampleData[i])
 	}
 	return result, nil
 }
 
 func (r *LoanRepository) GetLoanByID(ctx context.Context, loanID int) (*model.Loan, error) {
-	for _, v := range r.SampleData {
-		if v.ID == loanID {
-			return &v, nil
+	for k := range r.SampleData {
+		if r.SampleData[k].ID == loanID {
+			return r.SampleData[k], nil
 		}
 	}
 	return nil, nil

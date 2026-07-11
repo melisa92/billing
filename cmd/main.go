@@ -15,8 +15,8 @@ import (
 )
 
 type dummyStruct struct {
-	Loan         []model.Loan         `json:"loan"`
-	LoanSchedule []model.LoanSchedule `json:"loan_schedule"`
+	Loan         []*model.Loan         `json:"loan"`
+	LoanSchedule []*model.LoanSchedule `json:"loan_schedule"`
 }
 
 func main() {
@@ -44,23 +44,23 @@ func initTestCase() {
 	loanScheduleRepo := repo.NewLoanScheduleRepository(dummyData.LoanSchedule)
 
 	// init usecase
-	loanUsecase := usecase.NewLoanUsecase(loanRepo, loanScheduleRepo)
+	billingUsecase := usecase.NewBillingUsecase(loanRepo, loanScheduleRepo)
 
-	testCases(loanUsecase)
+	testCases(billingUsecase)
 }
 
 func testCases(uc iface.LoanUsecaseInterface) {
 
 	// map[int]float64 : expected the key is loan ID and float64 is the payment that you wanted to test
 	testCase := map[int]float64{
-		1: 110000,
+		1: 27500,
 	}
 
 	ctx := context.Background()
 
 	for loanID, paymentAmount := range testCase {
 		// Test Output Outstanding
-		outstanding, err := uc.GetOutstanding(ctx, loanID)
+		outstanding, err := uc.GetOutstanding(ctx, loanID, time.Now().Format("2006-01-02"))
 		if err != nil {
 			fmt.Printf("TestCaseOutstanding For LoanID: %d got error: %s", loanID, err.Error())
 		} else {
@@ -90,6 +90,26 @@ func testCases(uc iface.LoanUsecaseInterface) {
 				fmt.Printf("\nTestCaseMakePayment For LoanID: %d isFailed", loanID)
 			}
 		}
+
+		// Test Output IsDeliquent2
+		isDeliquent2, err := uc.IsDelinquent(ctx, loanID)
+		if err != nil {
+			fmt.Printf("\nTestCaseIsDeliquent For LoanID: %d got error: %s", loanID, err.Error())
+		} else {
+			if isDeliquent2 {
+				fmt.Printf("\nTestCaseIsDeliquent For LoanID: %d the customer is bad / deliquent", loanID)
+			} else {
+				fmt.Printf("\nTestCaseIsDeliquent For LoanID: %d the customer is safe (not deliquent)", loanID)
+			}
+		}
+
+		// Test Output Outstanding2
+		outstanding2, err := uc.GetOutstanding(ctx, loanID, time.Now().Format("2006-01-02"))
+		if err != nil {
+			fmt.Printf("TestCaseOutstanding For LoanID: %d got error: %s", loanID, err.Error())
+		} else {
+			fmt.Printf("\nTestCaseOutstanding For LoanID: %d got outstanding: %f", loanID, outstanding2)
+		}
 		fmt.Println("\n-----------------------------------------------")
 	}
 }
@@ -109,7 +129,7 @@ func generateJSON() {
 			BorrowerName:  "Jean",
 			Amount:        50000,
 			InterestRate:  10,
-			WeeksLoanTerm: 50,
+			WeeksLoanTerm: 10,
 			StartDate:     "2026-06-01",
 		},
 	}
@@ -121,23 +141,22 @@ func generateJSON() {
 		finishDate := startTime.AddDate(0, 0, 7*v.WeeksLoanTerm)
 		v.EndDate = finishDate.Format("2006-01-02")
 
-		var tempSchedule []model.LoanSchedule
+		var tempSchedule []*model.LoanSchedule
 		amountPerWeek := v.Amount / float64(v.WeeksLoanTerm) * (100 + v.InterestRate) / 100
 
 		for k := 1; k <= v.WeeksLoanTerm; k++ {
-			tempSchedule = append(tempSchedule, model.LoanSchedule{
+			tempSchedule = append(tempSchedule, &model.LoanSchedule{
 				ID:         scheduleID,
 				LoanID:     v.ID,
 				WeekNumber: k,
 				Amount:     amountPerWeek,
 				DueTime:    startTime.AddDate(0, 0, k*7),
 				PaidTime:   nil,
-				IsPaid:     false,
 			})
 			scheduleID++
 		}
 
-		dummyJson.Loan = append(dummyJson.Loan, *v)
+		dummyJson.Loan = append(dummyJson.Loan, v)
 		dummyJson.LoanSchedule = append(dummyJson.LoanSchedule, tempSchedule...)
 	}
 	jsonData, _ := json.Marshal(dummyJson)
